@@ -15,8 +15,8 @@ To fetch the package, run:
 
     go get github.com/cretz/go-sqleet/sqlite3
 
-Like go-sqlite3, this uses CGO, so on `gcc` needs to be on the `PATH` when building. This is easily done on Windows
-with [TDM-GCC](http://tdm-gcc.tdragon.net/). 
+Like go-sqlite3, this uses CGO, so `gcc` needs to be on the `PATH` when building. This is easily done on Windows with
+[TDM-GCC](http://tdm-gcc.tdragon.net/). 
 
 This is mostly a drop-in import change for go-sqlite3 except the driver name is `sqleet` instead of `sqlite3`. It
 operates as go-sqlite3 does in normal mode. However if `_key` or `_rekey` connection string URL parameters are provided,
@@ -32,16 +32,17 @@ Then, this create/opens a DB with a key of "test":
 db, err := sql.Open("sqleet", "somefile.db?_key=test")
 ```
 
-This will open or create or open a file with that key and will encrypt with that key. To specify a key to change to on
-the save, the `_rekey` can be provided. Since these are URL parameters, remember that they must be escaped if they
-contain any special chars (i.e. `net/url.QueryEscape`). A larger example is at [examples/simple](examples/simple).
+This will create or open a file with that key and will encrypt with that key when saving to disk. To specify a key to
+change to on the save, the `_rekey` can be provided. Since these are URL parameters, remember that they must be escaped
+if they contain any special chars (i.e. `net/url.QueryEscape`). A larger example is at
+[examples/simple/simple.go](examples/simple/simple.go).
 
 In addition to go-sqlite3's `ConnectHook`, another hook of the same type has been added on `SQLiteDriver` called
 `CreateHook`. This is the same as `ConnectHook` yet it is called right after the connection is created, unlike
-`ConnectHook` which applies a bunch of changes. This is required to work with SQLite encryption that must occur right
-after connection creation. Also, `Key` and `Rekey` methods have been added on `SQLiteConn`. Here's an example of a
-custom driver with key addition instead of in the connection string assuming `github.com/cretz/go-sqleet/sqlite3` is
-imported:
+`ConnectHook` which is only called after setup queries have been executed on the connection. This is required to work
+with SQLite encryption that must occur right after connection creation. Also, `Key` and `Rekey` methods have been added
+on `SQLiteConn`. Here's an example of a custom driver with key addition instead of in the connection string assuming
+`github.com/cretz/go-sqleet/sqlite3` is imported:
 
 ```go
 sql.Register("sqleet_custom", &sqlite3.SQLiteDriver{
