@@ -1,0 +1,6 @@
+[submodule "third-party/go-sqlite3"]
+	path = third-party/go-sqlite3
+	url = https://github.com/mattn/go-sqlite3.git
+[submodule "third-party/sqleet"]
+	path = third-party/sqleet
+	url = https://github.com/resilar/sqleet
