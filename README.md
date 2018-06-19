@@ -20,7 +20,13 @@ with [TDM-GCC](http://tdm-gcc.tdragon.net/).
 
 This is mostly a drop-in import change for go-sqlite3 except the driver name is `sqleet` instead of `sqlite3`. It
 operates as go-sqlite3 does in normal mode. However if `_key` or `_rekey` connection string URL parameters are provided,
-calls are made to SQLite's encryption API with the value. For example, this create/opens a DB with a key of "test":
+calls are made to SQLite's encryption API with the value. First, an import must be added for the `sqlite3` package:
+
+```go
+import _ "github.com/cretz/go-sqleet/sqlite3"
+```
+
+Then, this create/opens a DB with a key of "test":
 
 ```go
 db, err := sql.Open("sqleet", "somefile.db?_key=test")
