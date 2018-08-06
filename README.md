@@ -16,7 +16,7 @@ To fetch the package, run:
     go get github.com/cretz/go-sqleet/sqlite3
 
 Like go-sqlite3, this uses CGO, so `gcc` needs to be on the `PATH` when building. This is easily done on Windows with
-[TDM-GCC](http://tdm-gcc.tdragon.net/). 
+MinGW and putting `gcc` on the `PATH`. 
 
 This is mostly a drop-in import change for go-sqlite3 except the driver name is `sqleet` instead of `sqlite3`. It
 operates as go-sqlite3 does in normal mode. However if `_key` or `_rekey` connection string URL parameters are provided,
